@@ -4,6 +4,6 @@ import com.twozerotwo.fastfood.core.domain.Customer;
 
 public interface CustomerRepositoryPort {
 
-    Customer createCustomer(Customer customer);
+    Customer save(Customer customer);
 
 }

@@ -19,7 +19,7 @@ public class CustomerRepositoryAdapter implements CustomerRepositoryPort {
     }
 
     @Override
-    public Customer createCustomer(Customer customer) {
+    public Customer save(Customer customer) {
         CustomerEntity customerEntity = customerMapper.toEntity(customer);
 
         customerRepository.findByEmail(customer.getEmail()).ifPresent(
