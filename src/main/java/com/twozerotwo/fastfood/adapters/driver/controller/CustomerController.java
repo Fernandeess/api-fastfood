@@ -6,6 +6,7 @@ import com.twozerotwo.fastfood.application.mappers.CustomerMapper;
 import com.twozerotwo.fastfood.core.domain.Customer;
 import com.twozerotwo.fastfood.core.usecases.CreateCustomerUseCase;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -24,10 +25,13 @@ public class CustomerController {
     }
 
     @PostMapping
-    public ResponseEntity<CustomerResponse> createCustomer(@RequestBody CustomerRequest customerRequest){
-        Customer model = customerMapper.toModel(customerRequest);
-        Customer execute = createCustomerUseCase.execute(model);
-        return ResponseEntity.status(201).body(customerMapper.toResponse(execute));
+    public ResponseEntity<CustomerResponse> createCustomer(@RequestBody @Validated CustomerRequest customerRequest){
+        Customer customerResponse = createCustomerUseCase
+                .execute(
+                        customerMapper.
+                                toModel(customerRequest)
+                );
+        return ResponseEntity.status(201).body(customerMapper.toResponse(customerResponse));
     }
 
 }
