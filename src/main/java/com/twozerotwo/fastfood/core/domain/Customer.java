@@ -1,5 +1,4 @@
 package com.twozerotwo.fastfood.core.domain;
-
 import java.util.List;
 
 public class Customer {
@@ -11,6 +10,12 @@ public class Customer {
 
     public Customer(Long id, String name, String email, List<Order> orderList) {
         this.id = id;
+        this.name = name;
+        this.email = email;
+        this.orderList = orderList;
+    }
+
+    public Customer( String name, String email, List<Order> orderList){
         this.name = name;
         this.email = email;
         this.orderList = orderList;
@@ -46,5 +51,15 @@ public class Customer {
 
     public void setOrderList(List<Order> orderList) {
         this.orderList = orderList;
+    }
+
+    @Override
+    public String toString() {
+        return "Customer{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                ", email='" + email + '\'' +
+                ", orderList=" + orderList +
+                '}';
     }
 }
