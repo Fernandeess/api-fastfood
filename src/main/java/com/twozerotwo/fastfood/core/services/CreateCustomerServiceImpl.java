@@ -8,12 +8,12 @@ public class CreateCustomerServiceImpl implements CreateCustomerUseCase {
 
     private final CustomerRepositoryPort customerRepository ;
 
-    public CreateCustomerServiceImpl(CustomerRepositoryPort customerRepository) {
+    public CreateCustomerServiceImpl(CustomerRepositoryPort customerRepository){
         this.customerRepository = customerRepository;
     }
 
     @Override
     public Customer execute(Customer customer) {
-       return customerRepository.createCustomer(customer);
+        return customerRepository.save(customer);
     }
 }
