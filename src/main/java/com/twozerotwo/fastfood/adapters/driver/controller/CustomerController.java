@@ -4,7 +4,9 @@ import com.twozerotwo.fastfood.adapters.driver.controller.dto.request.CustomerRe
 import com.twozerotwo.fastfood.adapters.driver.controller.dto.response.CustomerResponse;
 import com.twozerotwo.fastfood.application.mappers.CustomerMapper;
 import com.twozerotwo.fastfood.core.domain.Customer;
+import com.twozerotwo.fastfood.core.exceptions.EmailAlreadyExistsException;
 import com.twozerotwo.fastfood.core.usecases.CreateCustomerUseCase;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -25,13 +27,13 @@ public class CustomerController {
     }
 
     @PostMapping
-    public ResponseEntity<CustomerResponse> createCustomer(@RequestBody @Validated CustomerRequest customerRequest){
-        Customer customerResponse = createCustomerUseCase
-                .execute(
-                        customerMapper.
-                                toModel(customerRequest)
-                );
-        return ResponseEntity.status(201).body(customerMapper.toResponse(customerResponse));
+    public ResponseEntity<CustomerResponse> createCustomer(@RequestBody @Validated CustomerRequest customerRequest) {
+        try {
+            Customer customerResponse = createCustomerUseCase.execute(customerMapper.toModel(customerRequest));
+            return ResponseEntity.status(201).body(customerMapper.toResponse(customerResponse));
+        } catch (DataIntegrityViolationException dataIntegrityViolationException) {
+            throw new EmailAlreadyExistsException("Não foi possível concluir o cadastro. Verifique os dados informados.");
+        }
     }
 
 }
