@@ -1,8 +1,10 @@
 package com.twozerotwo.fastfood.application.mappers;
 
 import com.twozerotwo.fastfood.adapters.driven.persistence.entity.CustomerEntity;
+import com.twozerotwo.fastfood.adapters.driver.controller.dto.request.CustomerCpfRequest;
 import com.twozerotwo.fastfood.adapters.driver.controller.dto.request.CustomerRequest;
 import com.twozerotwo.fastfood.adapters.driver.controller.dto.response.CustomerResponse;
+import com.twozerotwo.fastfood.adapters.driver.controller.dto.response.CustomerResponseCpf;
 import com.twozerotwo.fastfood.core.domain.Customer;
 import org.springframework.stereotype.Component;
 
@@ -15,11 +17,11 @@ public class CustomerMapper {
         if (customer == null) {
             return null;
         }
-
         return new CustomerEntity(
                 customer.getId(),
                 customer.getName(),
-                customer.getEmail()
+                customer.getEmail(),
+                customer.getCpf()
         );
     }
 
@@ -32,6 +34,7 @@ public class CustomerMapper {
                 entity.getId(),
                 entity.getName(),
                 entity.getEmail(),
+                entity.getCpf(),
                 new ArrayList<>()
         );
     }
@@ -45,6 +48,12 @@ public class CustomerMapper {
             return null;
         }
         return new CustomerResponse(customer.getId(), customer.getName(), customer.getEmail());
+    }
+    public CustomerResponseCpf toResponseCpf(Customer customer){
+        if (customer == null) {
+            return null;
+        }
+        return new CustomerResponseCpf(customer.getCpf());
     }
 }
 
