@@ -10,15 +10,15 @@ import java.util.UUID;
 public class Order {
     private UUID id;
     private String identifier;
-    private List<Product> productList;
+    private List<OrderItem> items;
     private BigDecimal totalPrice;
     private PaymentStatus paymentStatus;
     private OrderStatus orderStatus;
 
-    public Order(UUID id, String identifier, List<Product> productList, BigDecimal totalPrice, PaymentStatus paymentStatus, OrderStatus orderStatus) {
+    public Order(UUID id, String identifier, List<OrderItem> items, BigDecimal totalPrice, PaymentStatus paymentStatus, OrderStatus orderStatus) {
         this.id = id;
         this.identifier = identifier;
-        this.productList = productList;
+        this.items = items;
         this.totalPrice = totalPrice;
         this.paymentStatus = paymentStatus;
         this.orderStatus = orderStatus;
@@ -27,7 +27,7 @@ public class Order {
     public Order(Builder builder) {
         this.id = builder.id;
         this.identifier = builder.identifier;
-        this.productList = builder.productList;
+        this.items = builder.items;
         this.totalPrice = builder.totalPrice;
         this.paymentStatus = builder.paymentStatus;
         this.orderStatus = builder.orderStatus;
@@ -36,7 +36,7 @@ public class Order {
     public static class Builder {
         private UUID id;
         private String identifier;
-        private List<Product> productList;
+        private List<OrderItem> items;
         private BigDecimal totalPrice;
         private PaymentStatus paymentStatus;
         private OrderStatus orderStatus;
@@ -51,8 +51,8 @@ public class Order {
             return this;
         }
 
-        public Builder productList(List<Product> productList) {
-            this.productList = productList;
+        public Builder items(List<OrderItem> items) {
+            this.items = items;
             return this;
         }
 
@@ -92,12 +92,12 @@ public class Order {
         this.identifier = identifier;
     }
 
-    public List<Product> getProductList() {
-        return productList;
+    public List<OrderItem> getitems() {
+        return items;
     }
 
-    public void setProductList(List<Product> productList) {
-        this.productList = productList;
+    public void setitems(List<OrderItem> items) {
+        this.items = items;
     }
 
     public BigDecimal getTotalPrice() {

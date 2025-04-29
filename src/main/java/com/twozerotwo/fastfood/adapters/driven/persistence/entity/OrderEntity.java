@@ -20,8 +20,11 @@ public class OrderEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
     private UUID id;
+    @ManyToOne
+    private CustomerEntity customer;
     private String identifier;
-    private List<ProductEntity> productList;
+    @OneToMany(mappedBy = "order", cascade = CascadeType.ALL)
+    private List<OrderItemEntity> orderItem;
     private BigDecimal totalPrice;
     private PaymentStatus paymentStatus;
     private OrderStatus orderStatus;
