@@ -9,20 +9,18 @@ import org.springframework.stereotype.Component;
 @Component
 public class CustomerRepositoryAdapter implements CustomerRepositoryPort {
 
-    private final CustomerMapper customerMapper;
     private final CustomerRepository customerRepository;
 
+    public CustomerRepositoryAdapter(CustomerRepository customerRepository) {
 
-    public CustomerRepositoryAdapter(CustomerMapper customerMapper, CustomerRepository customerRepository) {
-        this.customerMapper = customerMapper;
         this.customerRepository = customerRepository;
     }
 
     @Override
     public Customer save(Customer customer) {
-        CustomerEntity customerEntity = customerMapper.toEntity(customer);
+        CustomerEntity customerEntity = CustomerMapper.toEntity(customer);
         CustomerEntity savedCustomer = customerRepository.save(customerEntity);
-        return customerMapper.toModel(savedCustomer);
+        return CustomerMapper.toDomain(savedCustomer);
     }
 
 }

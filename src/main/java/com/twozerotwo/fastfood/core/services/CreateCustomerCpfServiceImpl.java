@@ -15,6 +15,6 @@ public class CreateCustomerCpfServiceImpl implements CreateCustomerCpfUseCase {
     @Override
     public Customer execute(String cpf) {
         String cpfFormatted = cpf.replaceAll("[^\\d]", "");
-        return customerRepository.save(new Customer(cpfFormatted));
+        return customerRepository.save(new Customer.Builder().cpf(cpfFormatted).build());
     }
 }

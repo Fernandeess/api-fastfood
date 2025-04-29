@@ -23,19 +23,18 @@ public class CustomerController {
 
     private final CreateCustomerUseCase createCustomerUseCase;
     private final CreateCustomerCpfUseCase createCustomerCpfUseCase;
-    private final CustomerMapper customerMapper;
 
-    public CustomerController(CreateCustomerUseCase createCustomerUseCase, CreateCustomerCpfUseCase createCustomerCpfUseCase, CustomerMapper customerMapper) {
+
+    public CustomerController(CreateCustomerUseCase createCustomerUseCase, CreateCustomerCpfUseCase createCustomerCpfUseCase) {
         this.createCustomerUseCase = createCustomerUseCase;
         this.createCustomerCpfUseCase = createCustomerCpfUseCase;
-        this.customerMapper = customerMapper;
     }
 
     @PostMapping
     public ResponseEntity<CustomerResponse> createCustomer(@RequestBody @Validated CustomerRequest customerRequest) {
         try {
-            Customer customerResponse = createCustomerUseCase.execute(customerMapper.toModel(customerRequest));
-            return ResponseEntity.status(201).body(customerMapper.toResponse(customerResponse));
+            Customer customerResponse = createCustomerUseCase.execute(CustomerMapper.toDomain(customerRequest));
+            return ResponseEntity.status(201).body(CustomerMapper.toResponse(customerResponse));
         } catch (DataIntegrityViolationException dataIntegrityViolationException) {
             throw new EmailAlreadyExistsException("Não foi possível concluir o cadastro. Verifique os dados informados.");
         }
@@ -43,7 +42,7 @@ public class CustomerController {
 
     @PostMapping("cpf") ResponseEntity<CustomerResponseCpf> createCustomer(@RequestBody @Validated CustomerCpfRequest customerCpfRequest){
         Customer cosutumerCreated = createCustomerCpfUseCase.execute(customerCpfRequest.cpf());
-        return ResponseEntity.status(201).body(customerMapper.toResponseCpf(cosutumerCreated));
+        return ResponseEntity.status(201).body(CustomerMapper.toResponseCpf(cosutumerCreated));
     }
 
 }
