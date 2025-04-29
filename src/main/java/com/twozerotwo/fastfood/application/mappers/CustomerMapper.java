@@ -1,59 +1,60 @@
 package com.twozerotwo.fastfood.application.mappers;
 
 import com.twozerotwo.fastfood.adapters.driven.persistence.entity.CustomerEntity;
-import com.twozerotwo.fastfood.adapters.driver.controller.dto.request.CustomerCpfRequest;
 import com.twozerotwo.fastfood.adapters.driver.controller.dto.request.CustomerRequest;
 import com.twozerotwo.fastfood.adapters.driver.controller.dto.response.CustomerResponse;
 import com.twozerotwo.fastfood.adapters.driver.controller.dto.response.CustomerResponseCpf;
 import com.twozerotwo.fastfood.core.domain.Customer;
-import org.springframework.stereotype.Component;
+import lombok.experimental.UtilityClass;
 
-import java.util.ArrayList;
-
-@Component
+@UtilityClass
 public class CustomerMapper {
 
-    public CustomerEntity toEntity(Customer customer) {
-        if (customer == null) {
-            return null;
-        }
-        return new CustomerEntity(
-                customer.getId(),
-                customer.getName(),
-                customer.getEmail(),
-                customer.getCpf()
-        );
+    public static CustomerEntity toEntity(Customer customer) {
+        return CustomerEntity
+                .builder()
+                .id(customer.getId())
+                .cpf(customer.getCpf())
+                .orderList(
+                        customer
+                                .getOrderList()
+                                .stream()
+                                .map(OrderMapper::toEntity)
+                                .toList()
+                )
+                .build();
     }
 
-    public Customer toModel(CustomerEntity entity) {
-        if (entity == null) {
-            return null;
-        }
-
-        return new Customer(
-                entity.getId(),
-                entity.getName(),
-                entity.getEmail(),
-                entity.getCpf(),
-                new ArrayList<>()
-        );
+    public static Customer toDomain(CustomerEntity entity) {
+        return new Customer.Builder()
+                .id(entity.getId())
+                .cpf(entity.getCpf())
+                .name(entity.getName())
+                .email(entity.getEmail())
+                .orderList(entity.getOrderList().stream().map(OrderMapper::toDomain).toList())
+                .build();
     }
 
-    public Customer toModel(CustomerRequest customerRequest) {
-        return new Customer(null,customerRequest.name(), customerRequest.email(), new ArrayList<>());
+    public static Customer toDomain(CustomerRequest customerRequest) {
+        return new Customer.Builder()
+                .name(customerRequest.name())
+                .email(customerRequest.email())
+                .build();
     }
 
-    public CustomerResponse toResponse(Customer customer) {
-        if (customer == null) {
-            return null;
-        }
-        return new CustomerResponse(customer.getId(), customer.getName(), customer.getEmail());
+    public static CustomerResponse toResponse(Customer customer) {
+        return CustomerResponse.builder()
+                .id(customer.getId())
+                .email(customer.getEmail())
+                .name(customer.getName())
+                .build();
     }
-    public CustomerResponseCpf toResponseCpf(Customer customer){
-        if (customer == null) {
-            return null;
-        }
-        return new CustomerResponseCpf(customer.getCpf());
+
+    public static CustomerResponseCpf toResponseCpf(Customer customer) {
+        return CustomerResponseCpf.builder()
+                .cpf(customer.getCpf())
+                .build();
     }
+
 }
 
