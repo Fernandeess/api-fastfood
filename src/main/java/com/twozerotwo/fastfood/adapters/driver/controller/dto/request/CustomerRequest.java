@@ -6,6 +6,7 @@ import jakarta.validation.constraints.NotBlank;
 public record CustomerRequest(
         @NotBlank
         String name,
+        @NotBlank
         @Email(message = "deve ser um endereço de e-mail válido")
         String email
 ) {

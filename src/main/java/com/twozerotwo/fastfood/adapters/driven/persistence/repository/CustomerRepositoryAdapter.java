@@ -21,7 +21,6 @@ public class CustomerRepositoryAdapter implements CustomerRepositoryPort {
     @Override
     public Customer save(Customer customer) {
         CustomerEntity customerEntity = customerMapper.toEntity(customer);
-
         CustomerEntity savedCustomer = customerRepository.save(customerEntity);
         return customerMapper.toModel(savedCustomer);
     }

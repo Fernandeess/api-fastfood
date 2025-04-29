@@ -2,23 +2,44 @@ package com.twozerotwo.fastfood.core.domain;
 import java.util.List;
 
 public class Customer {
-
     private Long id;
     private String name;
     private String email;
+    private String cpf;
     private List<Order> orderList;
 
-    public Customer(Long id, String name, String email, List<Order> orderList) {
+    public Customer(Long id, String name, String email,String cpf, List<Order> orderList) {
         this.id = id;
+        this.name = name;
+        this.email = email;
+        this.cpf = cpf;
+        this.orderList = orderList;
+    }
+
+    public Customer(Long id, String name, String email,List<Order> orderList) {
+        this.id = id;
+        this.name = name;
+        this.email = email;
+
+        this.orderList = orderList;
+    }
+
+    public Customer(String cpf) {
+        this.cpf = cpf;
+    }
+
+    public Customer(String name, String email, List<Order> orderList){
         this.name = name;
         this.email = email;
         this.orderList = orderList;
     }
 
-    public Customer( String name, String email, List<Order> orderList){
-        this.name = name;
-        this.email = email;
-        this.orderList = orderList;
+    public String getCpf() {
+        return cpf;
+    }
+
+    public void setCpf(String cpf) {
+        this.cpf = cpf;
     }
 
     public Long getId() {
