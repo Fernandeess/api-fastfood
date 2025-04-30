@@ -26,6 +26,8 @@ public class OrderEntity {
     @OneToMany(mappedBy = "order", cascade = CascadeType.ALL)
     private List<OrderItemEntity> orderItem;
     private BigDecimal totalPrice;
+    @Enumerated
     private PaymentStatus paymentStatus;
+    @Enumerated
     private OrderStatus orderStatus;
 }

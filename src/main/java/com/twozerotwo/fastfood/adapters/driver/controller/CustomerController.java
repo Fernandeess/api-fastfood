@@ -41,8 +41,8 @@ public class CustomerController {
     }
 
     @PostMapping("cpf") ResponseEntity<CustomerResponseCpf> createCustomer(@RequestBody @Validated CustomerCpfRequest customerCpfRequest){
-        Customer cosutumerCreated = createCustomerCpfUseCase.execute(customerCpfRequest.cpf());
-        return ResponseEntity.status(201).body(CustomerMapper.toResponseCpf(cosutumerCreated));
+        Customer costumerCreated = createCustomerCpfUseCase.execute(customerCpfRequest.cpf());
+        return ResponseEntity.status(201).body(CustomerMapper.toResponseCpf(costumerCreated));
     }
 
 }

@@ -5,6 +5,7 @@ CREATE TABLE products(
     name varchar(100) UNIQUE,
     url_image varchar ,
     category varchar(255)
+
 );
 
 

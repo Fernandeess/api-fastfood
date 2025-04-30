@@ -1,0 +1,1 @@
+ALTER TABLE products ADD COLUMN unit_price NUMERIC(10, 2);

@@ -20,5 +20,6 @@ public class ProductEntity {
     private String name;
     private String UrlImage;
     private BigDecimal unitPrice;
+    @Enumerated
     private Category category;
 }
